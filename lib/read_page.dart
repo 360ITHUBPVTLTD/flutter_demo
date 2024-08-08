@@ -53,33 +53,45 @@ class _ReadPageState extends State<ReadPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Read Product Data'),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _productIdController,
-              decoration: InputDecoration(labelText: 'Product ID'),
-              keyboardType: TextInputType.text,
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _fetchProductData,
-              child: Text('Fetch Data'),
-            ),
-            SizedBox(height: 20),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Text(_response),
-              ),
+    return 
+      Scaffold(
+        appBar: AppBar(
+          title: Text('Read Product Data'),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.logout),
+              onPressed: () {
+                // Clear the _apiToken in SessionProvider
+                Provider.of<SessionProvider>(context, listen: false).logout();
+                // Navigate back to the login page
+                Navigator.pushReplacementNamed(context, '/login');
+              },
             ),
           ],
         ),
-      ),
-    );
+        body: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              TextField(
+                controller: _productIdController,
+                decoration: InputDecoration(labelText: 'Product ID'),
+                keyboardType: TextInputType.text,
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _fetchProductData,
+                child: Text('Fetch Data'),
+              ),
+              SizedBox(height: 20),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Text(_response),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
   }
 }

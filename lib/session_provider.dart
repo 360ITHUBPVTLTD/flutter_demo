@@ -9,4 +9,9 @@ class SessionProvider with ChangeNotifier {
     _apiToken = token;
     notifyListeners();
   }
+
+  void logout() {
+    _apiToken = '';
+    notifyListeners();
+  }
 }

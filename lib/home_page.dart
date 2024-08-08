@@ -1,34 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:provider/provider.dart'; // Ensure this import is correct
 import 'session_provider.dart';
+import 'guarded_page.dart'; // Import the GuardedPage if needed
 
-class HomePage extends StatefulWidget {
-  @override
-  HomePageState createState() => HomePageState();
-}
-
-class HomePageState extends State<HomePage> {
-  String _selectedValue = 'Customer';
-
-  void _navigateToPage(String page) {
-    Navigator.pushNamed(
-      context,
-      page,
-      arguments: _selectedValue,
-    );
-  }
-
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final sessionProvider = Provider.of<SessionProvider>(context);
-    final sessionToken = sessionProvider.apiToken;
-
-    // Print the session token
-    print('Session Token: $sessionToken');
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Home Page'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              // Clear the _apiToken in SessionProvider
+              Provider.of<SessionProvider>(context, listen: false).logout();
+              // Navigate back to the login page
+              Navigator.pushReplacementNamed(context, '/login');
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -37,19 +28,19 @@ class HomePageState extends State<HomePage> {
           children: <Widget>[
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () => _navigateToPage('/read'),
+              onPressed: () => Navigator.pushNamed(context, '/read'),
               child: Text('Read'),
             ),
             ElevatedButton(
-              onPressed: () => _navigateToPage('/create'),
+              onPressed: () => Navigator.pushNamed(context, '/create'),
               child: Text('Create'),
             ),
             ElevatedButton(
-              onPressed: () => _navigateToPage('/update'),
+              onPressed: () => Navigator.pushNamed(context, '/update'),
               child: Text('Update'),
             ),
             ElevatedButton(
-              onPressed: () => _navigateToPage('/delete'),
+              onPressed: () => Navigator.pushNamed(context, '/delete'),
               child: Text('Delete'),
             ),
           ],
