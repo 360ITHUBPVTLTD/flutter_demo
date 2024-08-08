@@ -116,9 +116,21 @@ class _UpdatePageState extends State<UpdatePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return 
+      Scaffold(
       appBar: AppBar(
         title: Text('Update Product Data'),
+        actions: [
+            IconButton(
+              icon: Icon(Icons.logout),
+              onPressed: () {
+                // Clear the _apiToken in SessionProvider
+                Provider.of<SessionProvider>(context, listen: false).logout();
+                // Navigate back to the login page
+                Navigator.pushReplacementNamed(context, '/login');
+              },
+            ),
+          ],
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),

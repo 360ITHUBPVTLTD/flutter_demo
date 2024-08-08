@@ -72,6 +72,17 @@ class CreatePageState extends State<CreatePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Create Product Data'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              // Clear the _apiToken in SessionProvider
+              Provider.of<SessionProvider>(context, listen: false).logout();
+              // Navigate back to the login page
+              Navigator.pushReplacementNamed(context, '/login');
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
